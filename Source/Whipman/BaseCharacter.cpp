@@ -49,7 +49,8 @@ void ABaseCharacter::MoveForward(const FInputActionValue &Value)
     {
         FVector Forward = GetActorForwardVector();
         AddMovementInput(Forward, DirectionalValue.Y * Speed * UGameplayStatics::GetWorldDeltaSeconds(this));
-        // AddControllerYawInput(DirectionalValue.X * TurnRate * UGameplayStatics::GetWorldDeltaSeconds(this));
+        FVector Right = GetActorRightVector();
+        AddMovementInput(Right, DirectionalValue.X * Speed * UGameplayStatics::GetWorldDeltaSeconds(this));
     }
 }
 
