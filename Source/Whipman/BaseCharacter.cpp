@@ -10,6 +10,8 @@
 #include "GameFramework/FloatingPawnMovement.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Whip/WhipComponent.h"
+#include "DrawDebugHelpers.h"
 
 
 ABaseCharacter::ABaseCharacter()
@@ -25,6 +27,9 @@ ABaseCharacter::ABaseCharacter()
 
     MovementComponent = CreateDefaultSubobject<UPawnMovementComponent, UFloatingPawnMovement>(TEXT("PawnMovement"));
 	MovementComponent->UpdatedComponent = RootComponent;
+
+    WhipComponent = CreateDefaultSubobject<UWhipComponent>(TEXT("WhipComponent"));
+	WhipComponent->RegisterComponent();
 }
 
 void ABaseCharacter::BeginPlay()
@@ -65,6 +70,26 @@ void ABaseCharacter::Look(const FInputActionValue &Value)
     }
 }
 
+void ABaseCharacter::Whip(const FInputActionValue &Value)
+{
+    UE_LOG(LogTemp, Display, TEXT("Whip pressed"));
+    // if (WhipComponent){
+    //     UE_LOG(LogTemp, Display, TEXT("HAS"));
+    // } else {
+    //     UE_LOG(LogTemp, Display, TEXT("NOT"));
+    // }
+    // if (!WhipComponent->IsInUse()) {
+    //     FHitResult HitResult;
+    //     FVector StartLocation = Camera->GetComponentLocation();
+    //     FVector EndLocation = Camera->GetForwardVector() * WhipRange + StartLocation;
+    //     FCollisionQueryParams TraceParams;
+
+    //     GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility);
+    //     DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 5.f);
+    //     UE_LOG(LogTemp, Display, TEXT("Ready"));
+    // }
+}
+
 
 void ABaseCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 {
@@ -74,6 +99,7 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputCompo
     {
         EnhancedInputComponent->BindAction(MoveForwardAction, ETriggerEvent::Triggered, this, &ABaseCharacter::MoveForward);
         EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ABaseCharacter::Look);
+        EnhancedInputComponent->BindAction(WhipAction, ETriggerEvent::Triggered, this, &ABaseCharacter::Whip);
     }
 }
 

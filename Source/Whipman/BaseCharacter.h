@@ -16,6 +16,7 @@ class USpringArmComponent;
 class UInputMappingContext;
 class UCameraComponent;
 class UInputAction;
+class UWhipComponent;
 
 UCLASS()
 class WHIPMAN_API ABaseCharacter : public ABasePawn
@@ -38,11 +39,14 @@ protected:
 	UInputAction *MoveForwardAction;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
 	UInputAction *LookAction;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
+	UInputAction *WhipAction;
 	UPROPERTY(Category = Pawn, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UPawnMovementComponent> MovementComponent;
 
 	void MoveForward(const FInputActionValue &Value);
 	void Look(const FInputActionValue &Value);
+	void Whip(const FInputActionValue &Value);
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
@@ -52,8 +56,13 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UCameraComponent *Camera;
 
+	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
+	UWhipComponent *WhipComponent;
+
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float Speed = 200.f;
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float TurnRate = 200.f;
+	UPROPERTY(EditAnywhere, Category = "Whip")
+	float WhipRange = 20.f;
 };
