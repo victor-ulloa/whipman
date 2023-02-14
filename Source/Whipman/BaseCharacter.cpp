@@ -29,7 +29,7 @@ ABaseCharacter::ABaseCharacter()
 	MovementComponent->UpdatedComponent = RootComponent;
 
     WhipComponent = CreateDefaultSubobject<UWhipComponent>(TEXT("WhipComponent"));
-	WhipComponent->RegisterComponent();
+    
 }
 
 void ABaseCharacter::BeginPlay()
@@ -63,7 +63,6 @@ void ABaseCharacter::Look(const FInputActionValue &Value)
 {
     const FVector2D LookAxisValue = Value.Get<FVector2D>();
     if (GetController()){
-        // CONTROL CAMERA WITH MOUSE
         AddControllerYawInput(LookAxisValue.X * TurnRate * UGameplayStatics::GetWorldDeltaSeconds(this));
         AddControllerPitchInput(LookAxisValue.Y * TurnRate * UGameplayStatics::GetWorldDeltaSeconds(this));
         
@@ -72,22 +71,18 @@ void ABaseCharacter::Look(const FInputActionValue &Value)
 
 void ABaseCharacter::Whip(const FInputActionValue &Value)
 {
-    UE_LOG(LogTemp, Display, TEXT("Whip pressed"));
-    // if (WhipComponent){
-    //     UE_LOG(LogTemp, Display, TEXT("HAS"));
-    // } else {
-    //     UE_LOG(LogTemp, Display, TEXT("NOT"));
-    // }
-    // if (!WhipComponent->IsInUse()) {
-    //     FHitResult HitResult;
-    //     FVector StartLocation = Camera->GetComponentLocation();
-    //     FVector EndLocation = Camera->GetForwardVector() * WhipRange + StartLocation;
-    //     FCollisionQueryParams TraceParams;
+    UE_LOG(LogTemp, Display, TEXT("Whip pressed %s"), WhipComponent);
 
-    //     GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility);
-    //     DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 5.f);
-    //     UE_LOG(LogTemp, Display, TEXT("Ready"));
-    // }
+    if (!WhipComponent->IsInUse()) {
+        FHitResult HitResult;
+        FVector StartLocation = Camera->GetComponentLocation();
+        FVector EndLocation = Camera->GetForwardVector() * WhipRange + StartLocation;
+        FCollisionQueryParams TraceParams;
+
+        GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility);
+        DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 5.f);
+        UE_LOG(LogTemp, Display, TEXT("Ready"));
+    }
 }
 
 
