@@ -26,6 +26,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
+	
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UStaticMeshComponent *BasicMesh;
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
