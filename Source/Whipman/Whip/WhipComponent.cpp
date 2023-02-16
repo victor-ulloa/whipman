@@ -42,7 +42,6 @@ bool UWhipComponent::IsInUse()
 
 void UWhipComponent::FireWhip(FVector TargetLocation)
 {
-	UE_LOG(LogTemp, Display, TEXT("%f %f %f"), TargetLocation.X, TargetLocation.Y, TargetLocation.Z);
 	WhipState = EWhipState::Firing;
 	FVector StartLocation =  GetStartLocation();
 	FVector VectorDirection = (TargetLocation - StartLocation);

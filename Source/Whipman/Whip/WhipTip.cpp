@@ -11,8 +11,13 @@ AWhipTip::AWhipTip()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	TipMesh = CreateDefaultSubobject<USphereComponent>(TEXT("TipMesh"));
-	RootComponent = TipMesh;
+	SphereCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TipMesh"));
+	RootComponent = SphereCollider;
+	SphereCollider->SetSimulatePhysics(true);
+    SphereCollider->SetNotifyRigidBodyCollision(true);
+
+	SphereCollider->BodyInstance.SetCollisionProfileName("BlockAllDynamic");
+	SphereCollider->OnComponentHit.AddDynamic(this, &AWhipTip::OnCompHit);
 
 	ProjectileMovementComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComp"));
 	ProjectileMovementComp->ProjectileGravityScale = 0;
@@ -23,8 +28,6 @@ void AWhipTip::BeginPlay()
 {
 	Super::BeginPlay();
 	ProjectileMovementComp->SetVelocityInLocalSpace(FireVelocity);
-	UE_LOG(LogTemp, Display, TEXT("%f %f %f"), FireVelocity.X, FireVelocity.Y, FireVelocity.Z);
-	UE_LOG(LogTemp, Display, TEXT("SPAWNED"));
 }
 
 // Called every frame
@@ -34,3 +37,7 @@ void AWhipTip::Tick(float DeltaTime)
 	UE_LOG(LogTemp, Display, TEXT("%f %f %f"), GetActorLocation().X, GetActorLocation().Y, GetActorLocation().Z);
 }
 
+void AWhipTip::OnCompHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
+{
+	UE_LOG(LogTemp, Display, TEXT("GOT HIT"));
+}

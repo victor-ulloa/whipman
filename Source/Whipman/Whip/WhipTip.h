@@ -32,10 +32,11 @@ public:
 private:
 
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
-	USphereComponent *TipMesh;
+	USphereComponent *SphereCollider;
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UProjectileMovementComponent *ProjectileMovementComp;
 
-	
+	UFUNCTION()
+	void OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 };
