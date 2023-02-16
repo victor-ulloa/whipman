@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "WhipTip.generated.h"
 
+class USphereComponent;
+class UProjectileMovementComponent;
+
 UCLASS()
 class WHIPMAN_API AWhipTip : public AActor
 {
@@ -22,5 +25,17 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
+	FVector FireVelocity;
+
+private:
+
+	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
+	USphereComponent *TipMesh;
+	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
+	UProjectileMovementComponent *ProjectileMovementComp;
+
+	
 
 };

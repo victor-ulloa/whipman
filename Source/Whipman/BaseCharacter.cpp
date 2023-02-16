@@ -28,7 +28,7 @@ ABaseCharacter::ABaseCharacter()
     MovementComponent = CreateDefaultSubobject<UPawnMovementComponent, UFloatingPawnMovement>(TEXT("PawnMovement"));
 	MovementComponent->UpdatedComponent = RootComponent;
 
-    WhipComponent = CreateDefaultSubobject<UWhipComponent>(TEXT("WhipComponent"));
+    Whip = CreateDefaultSubobject<UWhipComponent>(TEXT("Whip"));
     
 }
 
@@ -69,11 +69,9 @@ void ABaseCharacter::Look(const FInputActionValue &Value)
     }
 }
 
-void ABaseCharacter::Whip(const FInputActionValue &Value)
+void ABaseCharacter::FireWhip(const FInputActionValue &Value)
 {
-    UE_LOG(LogTemp, Display, TEXT("Whip pressed %s"), WhipComponent);
-
-    if (!WhipComponent->IsInUse()) {
+    if (!Whip->IsInUse()) {
         FHitResult HitResult;
         FVector StartLocation = Camera->GetComponentLocation();
         FVector EndLocation = Camera->GetForwardVector() * WhipRange + StartLocation;
@@ -81,7 +79,11 @@ void ABaseCharacter::Whip(const FInputActionValue &Value)
 
         GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility);
         DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 5.f);
-        UE_LOG(LogTemp, Display, TEXT("Ready"));
+        FVector TargetLocation = EndLocation;
+        if (AActor *HitActor = HitResult.GetActor()) {
+            TargetLocation = HitActor->GetActorLocation();
+        }
+        Whip->FireWhip(TargetLocation);
     }
 }
 
@@ -94,7 +96,7 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputCompo
     {
         EnhancedInputComponent->BindAction(MoveForwardAction, ETriggerEvent::Triggered, this, &ABaseCharacter::MoveForward);
         EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ABaseCharacter::Look);
-        EnhancedInputComponent->BindAction(WhipAction, ETriggerEvent::Triggered, this, &ABaseCharacter::Whip);
+        EnhancedInputComponent->BindAction(WhipAction, ETriggerEvent::Triggered, this, &ABaseCharacter::FireWhip);
     }
 }
 

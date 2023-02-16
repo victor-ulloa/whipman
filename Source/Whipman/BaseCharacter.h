@@ -46,7 +46,7 @@ protected:
 
 	void MoveForward(const FInputActionValue &Value);
 	void Look(const FInputActionValue &Value);
-	void Whip(const FInputActionValue &Value);
+	void FireWhip(const FInputActionValue &Value);
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
@@ -57,7 +57,7 @@ private:
 	UCameraComponent *Camera;
 
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
-	UWhipComponent *WhipComponent;
+	UWhipComponent *Whip;
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float Speed = 200.f;
@@ -65,4 +65,5 @@ private:
 	float TurnRate = 200.f;
 	UPROPERTY(EditAnywhere, Category = "Whip")
 	float WhipRange = 20.f;
+
 };

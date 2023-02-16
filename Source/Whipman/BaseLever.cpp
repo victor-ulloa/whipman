@@ -10,8 +10,8 @@ ABaseLever::ABaseLever()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	BasicMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BasicMesh"));
-	RootComponent = BasicMesh;
+	LeverMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LeverMesh"));
+	RootComponent = LeverMesh;
 
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
 	TriggerBox->SetupAttachment(RootComponent);

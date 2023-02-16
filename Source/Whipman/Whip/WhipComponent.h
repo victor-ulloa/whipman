@@ -26,9 +26,15 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	bool IsInUse();
-	void FireWhip(FVector TargetLocation, FVector LocalOffset);
+	void FireWhip(FVector TargetLocation);
+	FVector GetStartLocation();
 
 private:
+
+	UPROPERTY(EditAnywhere, Category = "Whip")
+	FVector WhipOffset;
+	UPROPERTY(EditAnywhere, Category = "Whip")
+	float FireSpeed = 10;
 	UPROPERTY(EditAnywhere, Category = "Whip")
 	TEnumAsByte<EWhipState> WhipState;
 		

@@ -2,6 +2,9 @@
 
 
 #include "WhipComponent.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "Kismet/GameplayStatics.h"
+#include "WhipTip.h"
 
 // Sets default values for this component's properties
 UWhipComponent::UWhipComponent()
@@ -37,7 +40,24 @@ bool UWhipComponent::IsInUse()
     return WhipState != EWhipState::ReadyToFire;
 }
 
-void UWhipComponent::FireWhip(FVector TargetLocation, FVector LocalOffset)
+void UWhipComponent::FireWhip(FVector TargetLocation)
 {
-	
+	UE_LOG(LogTemp, Display, TEXT("%f %f %f"), TargetLocation.X, TargetLocation.Y, TargetLocation.Z);
+	WhipState = EWhipState::Firing;
+	FVector StartLocation =  GetStartLocation();
+	FVector VectorDirection = (TargetLocation - StartLocation);
+	VectorDirection.Normalize();
+
+	FActorSpawnParameters SpawnInfo;
+	FTransform ActorTransform  = FTransform(StartLocation);
+	AWhipTip *WhipTip = GetWorld()->SpawnActorDeferred<AWhipTip>(AWhipTip::StaticClass(), ActorTransform);
+	WhipTip->FireVelocity = VectorDirection * FireSpeed;
+	UGameplayStatics::FinishSpawningActor(WhipTip, ActorTransform);
+}
+
+FVector UWhipComponent::GetStartLocation()
+{
+	FVector TransformedDirection = UKismetMathLibrary::TransformDirection(GetOwner()->GetActorTransform(), WhipOffset);
+	FVector StartingLocation = TransformedDirection + GetOwner()->GetActorLocation();
+    return StartingLocation;
 }

@@ -28,7 +28,7 @@ public:
 private:
 	
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
-	UStaticMeshComponent *BasicMesh;
+	UStaticMeshComponent *LeverMesh;
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UBoxComponent *TriggerBox;
 };
