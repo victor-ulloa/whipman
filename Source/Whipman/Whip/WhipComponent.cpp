@@ -5,6 +5,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "WhipTip.h"
+#include "WhipCable.h"
 
 // Sets default values for this component's properties
 UWhipComponent::UWhipComponent()
@@ -47,11 +48,18 @@ void UWhipComponent::FireWhip(FVector TargetLocation)
 	FVector VectorDirection = (TargetLocation - StartLocation);
 	VectorDirection.Normalize();
 
+	// Spawn and attach tip
+
 	FActorSpawnParameters SpawnInfo;
 	FTransform ActorTransform  = FTransform(StartLocation);
 	AWhipTip *WhipTip = GetWorld()->SpawnActorDeferred<AWhipTip>(AWhipTip::StaticClass(), ActorTransform);
 	WhipTip->FireVelocity = VectorDirection * FireSpeed;
 	UGameplayStatics::FinishSpawningActor(WhipTip, ActorTransform);
+	
+	// Spawn and attach cable
+	AWhipCable *WhipCable = GetWorld()->SpawnActor<AWhipCable>(AWhipCable::StaticClass(), StartLocation, UKismetMathLibrary::MakeRotFromX(VectorDirection));
+	WhipCable->AttachToActor(GetOwner(), FAttachmentTransformRules::KeepWorldTransform);
+
 }
 
 FVector UWhipComponent::GetStartLocation()
