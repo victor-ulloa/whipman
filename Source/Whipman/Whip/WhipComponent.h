@@ -34,7 +34,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Whip")
 	FVector WhipOffset;
 	UPROPERTY(EditAnywhere, Category = "Whip")
-	float FireSpeed = 10;
+	float FireSpeed = 1000;
 	UPROPERTY(EditAnywhere, Category = "Whip")
 	TEnumAsByte<EWhipState> WhipState;
 		
