@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "CableActor.h"
+#include "CableComponent.h"
 #include "WhipCable.generated.h"
 
 /**

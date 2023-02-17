@@ -57,9 +57,14 @@ void UWhipComponent::FireWhip(FVector TargetLocation)
 	UGameplayStatics::FinishSpawningActor(WhipTip, ActorTransform);
 	
 	// Spawn and attach cable
+
 	AWhipCable *WhipCable = GetWorld()->SpawnActor<AWhipCable>(AWhipCable::StaticClass(), StartLocation, UKismetMathLibrary::MakeRotFromX(VectorDirection));
 	WhipCable->AttachToActor(GetOwner(), FAttachmentTransformRules::KeepWorldTransform);
-
+	WhipCable->CableComponent->EndLocation = FVector::ZeroVector;
+	WhipCable->CableComponent->SetAttachEndTo(WhipTip, TEXT(""));
+	WhipCable->CableComponent->CableWidth = 1.25f;
+	WhipCable->CableComponent->bEnableStiffness = true;
+	WhipCable->CableComponent->SubstepTime = 0.005f;
 }
 
 FVector UWhipComponent::GetStartLocation()
