@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "WhipComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
@@ -17,19 +16,16 @@ UWhipComponent::UWhipComponent()
 	// ...
 }
 
-
 // Called when the game starts
 void UWhipComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
 	// ...
-	
 }
 
-
 // Called every frame
-void UWhipComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UWhipComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
@@ -38,27 +34,29 @@ void UWhipComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 
 bool UWhipComponent::IsInUse()
 {
-    return WhipState != EWhipState::ReadyToFire;
+	return WhipState != EWhipState::ReadyToFire;
 }
 
 void UWhipComponent::FireWhip(FVector TargetLocation)
 {
 	WhipState = EWhipState::Firing;
-	FVector StartLocation =  GetStartLocation();
+
+	FVector StartLocation = GetStartLocation();
 	FVector VectorDirection = (TargetLocation - StartLocation);
 	VectorDirection.Normalize();
 
 	// Spawn and attach tip
 
 	FActorSpawnParameters SpawnInfo;
-	FTransform ActorTransform  = FTransform(StartLocation);
-	AWhipTip *WhipTip = GetWorld()->SpawnActorDeferred<AWhipTip>(AWhipTip::StaticClass(), ActorTransform);
+	FTransform ActorTransform = FTransform(StartLocation);
+	WhipTip = GetWorld()->SpawnActorDeferred<AWhipTip>(AWhipTip::StaticClass(), ActorTransform);
 	WhipTip->FireVelocity = VectorDirection * FireSpeed;
+	WhipTip->SphereCollider->OnComponentHit.AddDynamic(this, &UWhipComponent::OnCompHit);
 	UGameplayStatics::FinishSpawningActor(WhipTip, ActorTransform);
-	
+
 	// Spawn and attach cable
 
-	AWhipCable *WhipCable = GetWorld()->SpawnActor<AWhipCable>(AWhipCable::StaticClass(), StartLocation, UKismetMathLibrary::MakeRotFromX(VectorDirection));
+	WhipCable = GetWorld()->SpawnActor<AWhipCable>(AWhipCable::StaticClass(), StartLocation, UKismetMathLibrary::MakeRotFromX(VectorDirection));
 	WhipCable->AttachToActor(GetOwner(), FAttachmentTransformRules::KeepWorldTransform);
 	WhipCable->CableComponent->EndLocation = FVector::ZeroVector;
 	WhipCable->CableComponent->SetAttachEndTo(WhipTip, TEXT(""));
@@ -67,9 +65,28 @@ void UWhipComponent::FireWhip(FVector TargetLocation)
 	WhipCable->CableComponent->SubstepTime = 0.005f;
 }
 
+void UWhipComponent::CancelWhip()
+{
+	if (WhipTip && WhipCable)
+	{
+		WhipTip->Destroy();
+		WhipTip = nullptr;
+		
+		WhipCable->Destroy();
+		WhipCable = nullptr;
+
+		WhipState = EWhipState::ReadyToFire;
+	}
+}
+
 FVector UWhipComponent::GetStartLocation()
 {
 	FVector TransformedDirection = UKismetMathLibrary::TransformDirection(GetOwner()->GetActorTransform(), WhipOffset);
 	FVector StartingLocation = TransformedDirection + GetOwner()->GetActorLocation();
-    return StartingLocation;
+	return StartingLocation;
+}
+
+void UWhipComponent::OnCompHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
+{
+	UE_LOG(LogTemp, Display, TEXT("GOT HIT"));
 }

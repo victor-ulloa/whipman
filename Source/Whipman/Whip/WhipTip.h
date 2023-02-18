@@ -4,9 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/SphereComponent.h"
 #include "WhipTip.generated.h"
 
-class USphereComponent;
 class UProjectileMovementComponent;
 
 UCLASS()
@@ -28,15 +28,13 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	FVector FireVelocity;
+	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
+	USphereComponent *SphereCollider;
 
 private:
 
-	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
-	USphereComponent *SphereCollider;
+	
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UProjectileMovementComponent *ProjectileMovementComp;
-
-	UFUNCTION()
-	void OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 };

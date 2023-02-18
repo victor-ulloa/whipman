@@ -84,6 +84,8 @@ void ABaseCharacter::FireWhip(const FInputActionValue &Value)
             TargetLocation = HitActor->GetActorLocation();
         }
         Whip->FireWhip(TargetLocation);
+    } else {
+        // Whip->CancelWhip();
     }
 }
 
