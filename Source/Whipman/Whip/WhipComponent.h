@@ -38,6 +38,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Whip")
 	float FireSpeed = 5000;
 	UPROPERTY(EditAnywhere, Category = "Whip")
+	float WhipTimer = 0.25f;
+	UPROPERTY(EditAnywhere, Category = "Whip")
 	TEnumAsByte<EWhipState> WhipState;
 
 	UPROPERTY(EditAnywhere, Category = "Whip")

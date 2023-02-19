@@ -63,6 +63,9 @@ void UWhipComponent::FireWhip(FVector TargetLocation)
 	WhipCable->CableComponent->CableWidth = 1.25f;
 	WhipCable->CableComponent->bEnableStiffness = true;
 	WhipCable->CableComponent->SubstepTime = 0.005f;
+
+	FTimerHandle handle;
+	GetWorld()->GetTimerManager().SetTimer(handle, this, &UWhipComponent::CancelWhip, WhipTimer, false);
 }
 
 void UWhipComponent::CancelWhip()
@@ -88,5 +91,5 @@ FVector UWhipComponent::GetStartLocation()
 
 void UWhipComponent::OnCompHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
 {
-	UE_LOG(LogTemp, Display, TEXT("GOT HIT"));
+	CancelWhip();
 }
