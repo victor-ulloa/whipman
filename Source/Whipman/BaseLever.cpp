@@ -15,6 +15,8 @@ ABaseLever::ABaseLever()
 
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
 	TriggerBox->SetupAttachment(RootComponent);
+	TriggerBox->SetCollisionProfileName("TriggerLever");
+	
 
 }
 
@@ -23,6 +25,7 @@ void ABaseLever::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &ABaseLever::OnOverlapBegin);
 }
 
 // Called every frame
@@ -32,3 +35,7 @@ void ABaseLever::Tick(float DeltaTime)
 
 }
 
+void ABaseLever::OnOverlapBegin(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+{
+	UE_LOG(LogTemp, Display, TEXT("TEST HIT"));
+}
