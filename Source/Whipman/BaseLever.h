@@ -25,6 +25,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(EditAnywhere, Category = "State")
+	bool LeverOn = false;
 	
 
 private:
@@ -36,4 +38,7 @@ private:
 	
 	UFUNCTION() 
 	void OnOverlapBegin(UPrimitiveComponent* Comp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	void SwitchState();
+	void ReloadComponent();
 };

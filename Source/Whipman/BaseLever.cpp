@@ -17,7 +17,6 @@ ABaseLever::ABaseLever()
 	TriggerBox->SetupAttachment(RootComponent);
 	TriggerBox->SetCollisionProfileName("TriggerLever");
 	
-
 }
 
 // Called when the game starts or when spawned
@@ -37,5 +36,18 @@ void ABaseLever::Tick(float DeltaTime)
 
 void ABaseLever::OnOverlapBegin(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
-	UE_LOG(LogTemp, Display, TEXT("TEST HIT"));
+	SwitchState();
+}
+
+void ABaseLever::SwitchState()
+{
+	LeverOn = !LeverOn;
+	ReloadComponent();
+}
+
+void ABaseLever::ReloadComponent()
+{
+	FRotator CurrentRotation = GetActorRotation();
+	CurrentRotation.Pitch = 180;
+	SetActorRotation(CurrentRotation);
 }
