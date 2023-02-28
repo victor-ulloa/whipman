@@ -26,6 +26,7 @@ public:
 
 	void ShowMenu();
 	void RemoveMenu();
+	void OpenLevel();
 	void ShowQuitConfirmation();
 	void RemoveQuitConfirmation();
 	void ExitGame();

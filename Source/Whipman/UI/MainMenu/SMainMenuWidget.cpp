@@ -113,7 +113,7 @@ void SMainMenuWidget::Construct(const FArguments &InArgs)
 FReply SMainMenuWidget::OnPlayClicked() const
 {
     UE_LOG(LogTemp, Log, TEXT("Play Clicked"));
-    // TODO: Open new level
+    MenuHUD->OpenLevel();
     return FReply::Handled();
 }
 

@@ -6,6 +6,7 @@
 #include "Widgets/SWeakWidget.h"
 #include "Engine/Engine.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/GameplayStatics.h"
 
 void AMainMenuHUD::BeginPlay()
 {
@@ -33,6 +34,14 @@ void AMainMenuHUD::RemoveMenu()
     {
         GEngine->GameViewport->RemoveViewportWidgetContent(MenuWidgetContainer.ToSharedRef());
     }
+    
+}
+
+void AMainMenuHUD::OpenLevel()
+{
+    PlayerOwner->bShowMouseCursor = false;
+    PlayerOwner->SetInputMode(FInputModeGameOnly());
+    UGameplayStatics::OpenLevel(this, "Level");
 }
 
 void AMainMenuHUD::ShowQuitConfirmation()
