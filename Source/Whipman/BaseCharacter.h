@@ -7,10 +7,6 @@
 #include "InputActionValue.h"
 #include "BaseCharacter.generated.h"
 
-/**
- *
- */
-
 class USkeletalMesh;
 class USpringArmComponent;
 class UInputMappingContext;
@@ -24,7 +20,6 @@ class WHIPMAN_API ABaseCharacter : public ABasePawn
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this pawn's properties
 	ABaseCharacter();
 
 	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
