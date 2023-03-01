@@ -23,17 +23,14 @@ public:
 
 protected:
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-private:
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
-	USceneComponent *SpawnPoint;
+	virtual void BeginPlay() override;	
 
 public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
 	class UCapsuleComponent *CapsuleComp;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
+	USceneComponent *SpawnPoint;
 
 	
 };
