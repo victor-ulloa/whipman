@@ -2,14 +2,28 @@
 
 #include "BaseTurret.h"
 #include "Whipman/Misc/BaseProjectile.h"
+#include "TimerManager.h"
 
 ABaseTurret::ABaseTurret()
 {
     TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TurretMesh"));
     TurretMesh->SetupAttachment(RootComponent);
+    
 }
 
-void ABaseTurret::Shoot()
+void ABaseTurret::BeginPlay()
+{
+    Super::BeginPlay();
+    GetWorldTimerManager().SetTimer(FireRateTimerHandle, this, &ABaseTurret::Fire, FireRate, true);
+}
+
+void ABaseTurret::CheckFireCondition()
+{
+
+}
+
+void ABaseTurret::Fire()
 {  
-    // GetWorld()->SpawnActor(Projectile, SpawnPoint->GetComponentLocation());
+    FVector Location = SpawnPoint->GetComponentLocation();
+    GetWorld()->SpawnActor<ABaseProjectile>(Projectile, SpawnPoint->GetComponentLocation(), GetActorRotation());
 }

@@ -32,7 +32,6 @@ public:
 	USphereComponent *SphereCollider;
 
 private:
-
 	
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UProjectileMovementComponent *ProjectileMovementComp;

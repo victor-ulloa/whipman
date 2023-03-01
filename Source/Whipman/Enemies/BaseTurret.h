@@ -4,8 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Whipman/BasePawn.h"
-#include "Whipman/Misc/BaseProjectile.h"
 #include "BaseTurret.generated.h"
+
+class ABaseProjectile;
 
 UCLASS()
 class WHIPMAN_API ABaseTurret : public ABasePawn
@@ -15,6 +16,9 @@ class WHIPMAN_API ABaseTurret : public ABasePawn
 public:
 	ABaseTurret();
 
+protected:
+	virtual void BeginPlay() override;
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
 	UStaticMeshComponent *TurretMesh;
@@ -22,5 +26,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Projectile")
 	TSubclassOf<ABaseProjectile> Projectile;
 
-	void Shoot();
+	FTimerHandle FireRateTimerHandle;
+	float FireRate = 2.f;
+
+	void CheckFireCondition();
+	void Fire();
 };
