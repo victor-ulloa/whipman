@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameState.h"
-#include "BaseLever.h"
+#include "Whipman/Environment/BaseLever.h"
 #include "BaseGameState.generated.h"
 
 /**

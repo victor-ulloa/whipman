@@ -4,12 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Whipman/Interfaces/Actionable.h"
 #include "BaseLever.generated.h"
 
 class UBoxComponent;
 
 UCLASS()
-class WHIPMAN_API ABaseLever : public AActor
+class WHIPMAN_API ABaseLever : public AActor, public IActionable
 {
 	GENERATED_BODY()
 
@@ -36,8 +37,10 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UBoxComponent *TriggerBox;
 	
-	UFUNCTION() 
-	void OnOverlapBegin(UPrimitiveComponent* Comp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	// UFUNCTION() 
+	// void OnOverlapBegin(UPrimitiveComponent* Comp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	virtual void OnOverlapBegin(UPrimitiveComponent* Comp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
 
 	void SwitchState();
 	void ReloadComponent();

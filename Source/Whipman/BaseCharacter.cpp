@@ -12,11 +12,10 @@
 #include "Whip/WhipComponent.h"
 #include "DrawDebugHelpers.h"
 
-
 ABaseCharacter::ABaseCharacter()
 {
-	SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMesh"));
-	SkeletalMesh->SetupAttachment(RootComponent);
+    SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMesh"));
+    SkeletalMesh->SetupAttachment(RootComponent);
 
     SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
     SpringArm->SetupAttachment(RootComponent);
@@ -25,10 +24,9 @@ ABaseCharacter::ABaseCharacter()
     Camera->SetupAttachment(SpringArm);
 
     MovementComponent = CreateDefaultSubobject<UPawnMovementComponent, UFloatingPawnMovement>(TEXT("PawnMovement"));
-	MovementComponent->UpdatedComponent = RootComponent;
+    MovementComponent->UpdatedComponent = RootComponent;
 
     Whip = CreateDefaultSubobject<UWhipComponent>(TEXT("Whip"));
-    
 }
 
 void ABaseCharacter::BeginPlay()
@@ -61,7 +59,8 @@ void ABaseCharacter::MoveForward(const FInputActionValue &Value)
 void ABaseCharacter::Look(const FInputActionValue &Value)
 {
     const FVector2D LookAxisValue = Value.Get<FVector2D>();
-    if (GetController()){
+    if (GetController())
+    {
         AddControllerYawInput(LookAxisValue.X * TurnRate * UGameplayStatics::GetWorldDeltaSeconds(this));
         AddControllerPitchInput(LookAxisValue.Y * TurnRate * UGameplayStatics::GetWorldDeltaSeconds(this));
     }
@@ -69,21 +68,23 @@ void ABaseCharacter::Look(const FInputActionValue &Value)
 
 void ABaseCharacter::FireWhip(const FInputActionValue &Value)
 {
-    if (!Whip->IsInUse()) {
+    if (!Whip->IsInUse())
+    {
         FHitResult HitResult;
         FVector StartLocation = Camera->GetComponentLocation();
         FVector EndLocation = Camera->GetForwardVector() * WhipRange + StartLocation;
         FCollisionQueryParams TraceParams;
 
         GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility);
+        DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 5.f);
         FVector TargetLocation = EndLocation;
-        if (AActor *HitActor = HitResult.GetActor()) {
+        if (AActor *HitActor = HitResult.GetActor())
+        {
             TargetLocation = HitActor->GetActorLocation();
         }
         Whip->FireWhip(TargetLocation);
     }
 }
-
 
 void ABaseCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 {
@@ -96,4 +97,3 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputCompo
         EnhancedInputComponent->BindAction(WhipAction, ETriggerEvent::Triggered, this, &ABaseCharacter::FireWhip);
     }
 }
-
