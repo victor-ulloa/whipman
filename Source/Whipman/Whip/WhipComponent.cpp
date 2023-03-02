@@ -5,7 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "WhipTip.h"
 #include "WhipCable.h"
-#include "Whipman/BaseCharacter.h"
+#include "Whipman/PlayerCharacter.h"
 #include "Whipman/Interfaces/Actionable.h"
 
 // Sets default values for this component's properties
@@ -103,7 +103,7 @@ FVector UWhipComponent::GetStartLocation()
 
 void UWhipComponent::OnOverlapBegin(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
-	if (SweepResult.GetActor()->IsA(ABaseCharacter::StaticClass()))
+	if (SweepResult.GetActor()->IsA(APlayerCharacter::StaticClass()))
 	{
 		return;
 	}

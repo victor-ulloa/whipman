@@ -3,52 +3,47 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BasePawn.h"
+#include "GameFramework/Character.h"
 #include "InputActionValue.h"
-#include "BaseCharacter.generated.h"
+#include "PlayerCharacter.generated.h"
 
-class USkeletalMesh;
-class USpringArmComponent;
 class UInputMappingContext;
-class UCameraComponent;
 class UInputAction;
-class UWhipComponent;
 class UInputComponent;
+class USpringArmComponent;
+class UCameraComponent;
+class UCharacterMovementComponent;
+class UWhipComponent;
 
 UCLASS()
-class WHIPMAN_API ABaseCharacter : public ABasePawn
+class WHIPMAN_API APlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
-	ABaseCharacter();
+	APlayerCharacter();
 
 	virtual void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
 	UInputMappingContext *CharacterMappingContext;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
-	UInputAction *MoveForwardAction;
+	UInputAction *MoveAction;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
 	UInputAction *LookAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction *JumpAction;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
 	UInputAction *WhipAction;
-	UPROPERTY(Category = Pawn, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UPawnMovementComponent> MovementComponent;
 
-	void MoveForward(const FInputActionValue &Value);
+	void Move(const FInputActionValue &Value);
 	void Look(const FInputActionValue &Value);
 	void FireWhip(const FInputActionValue &Value);
 
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent *SkeletalMesh;
-	UPROPERTY(VisibleAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
-	USpringArmComponent *SpringArm;
 	UPROPERTY(VisibleAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UCameraComponent *Camera;
 
@@ -61,5 +56,4 @@ private:
 	float TurnRate = 200.f;
 	UPROPERTY(EditAnywhere, Category = "Whip")
 	float WhipRange = 20.f;
-
 };
