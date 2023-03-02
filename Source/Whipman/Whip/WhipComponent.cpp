@@ -52,6 +52,7 @@ void UWhipComponent::FireWhip(FVector TargetLocation)
 	WhipTip = GetWorld()->SpawnActorDeferred<AWhipTip>(AWhipTip::StaticClass(), ActorTransform);
 	WhipTip->FireVelocity = VectorDirection * FireSpeed;
 	WhipTip->SphereCollider->OnComponentHit.AddDynamic(this, &UWhipComponent::OnCompHit);
+	WhipTip->SphereCollider->SetCollisionProfileName(TEXT("OverlapAll"));
 	UGameplayStatics::FinishSpawningActor(WhipTip, ActorTransform);
 
 	// Spawn and attach cable
@@ -63,6 +64,7 @@ void UWhipComponent::FireWhip(FVector TargetLocation)
 	WhipCable->CableComponent->CableWidth = 1.25f;
 	WhipCable->CableComponent->bEnableStiffness = true;
 	WhipCable->CableComponent->SubstepTime = 0.005f;
+	WhipCable->CableComponent->SetCollisionProfileName(TEXT("OverlapAll"));
 
 	FTimerHandle handle;
 	GetWorld()->GetTimerManager().SetTimer(handle, this, &UWhipComponent::CancelWhip, WhipTimer, false);

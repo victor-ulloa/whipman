@@ -76,11 +76,11 @@ void ABaseCharacter::FireWhip(const FInputActionValue &Value)
         FCollisionQueryParams TraceParams;
 
         GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility);
-        DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 5.f);
+        // DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Red, false, 5.f);
         FVector TargetLocation = EndLocation;
         if (AActor *HitActor = HitResult.GetActor())
         {
-            TargetLocation = HitActor->GetActorLocation();
+            TargetLocation = HitResult.ImpactPoint;
         }
         Whip->FireWhip(TargetLocation);
     }
