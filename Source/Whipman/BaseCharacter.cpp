@@ -38,7 +38,7 @@ void ABaseCharacter::BeginPlay()
         if (UEnhancedInputLocalPlayerSubsystem *Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
         {
             Subsystem->ClearAllMappings();
-            Subsystem->AddMappingContext(TankMappingContext, 0);
+            Subsystem->AddMappingContext(CharacterMappingContext, 0);
         }
     }
 }

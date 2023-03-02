@@ -13,6 +13,7 @@ class UInputMappingContext;
 class UCameraComponent;
 class UInputAction;
 class UWhipComponent;
+class UInputComponent;
 
 UCLASS()
 class WHIPMAN_API ABaseCharacter : public ABasePawn
@@ -22,14 +23,14 @@ class WHIPMAN_API ABaseCharacter : public ABasePawn
 public:
 	ABaseCharacter();
 
-	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
+	virtual void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
-	UInputMappingContext *TankMappingContext;
+	UInputMappingContext *CharacterMappingContext;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
 	UInputAction *MoveForwardAction;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
