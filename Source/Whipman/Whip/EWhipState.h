@@ -12,5 +12,5 @@ enum EWhipState
 {
      ReadyToFire         UMETA(DisplayName = "ReadyToFire"),
      Firing              UMETA(DisplayName = "Firing"),
-     AttachedToTarget    UMETA(DisplayName = "AttachedToTarget"),
+     Cooldown            UMETA(DisplayName = "Cooldown"),
 };

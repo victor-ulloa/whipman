@@ -34,7 +34,4 @@ public:
 private:
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UProjectileMovementComponent *ProjectileMovementComp;
-
-	UFUNCTION()
-	void OnOverlapBegin(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 };

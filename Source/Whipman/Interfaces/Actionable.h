@@ -18,5 +18,5 @@ class WHIPMAN_API IActionable
 public:
 
 	UFUNCTION() 
-	virtual void OnOverlapBegin(UPrimitiveComponent* Comp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	virtual void OnOverlap();
 };

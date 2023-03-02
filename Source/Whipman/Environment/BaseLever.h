@@ -28,19 +28,12 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "State")
 	bool LeverOn = false;
-	
 
 private:
-	
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UStaticMeshComponent *LeverMesh;
-	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
-	UBoxComponent *TriggerBox;
-	
-	// UFUNCTION() 
-	// void OnOverlapBegin(UPrimitiveComponent* Comp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	virtual void OnOverlapBegin(UPrimitiveComponent* Comp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
+	virtual void OnOverlap() override;
 
 	void SwitchState();
 	void ReloadComponent();

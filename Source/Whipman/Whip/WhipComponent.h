@@ -34,6 +34,9 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Whip")
+	float Cooldown = 1.f;
+
+	UPROPERTY(EditAnywhere, Category = "Whip")
 	FVector WhipOffset;
 	UPROPERTY(EditAnywhere, Category = "Whip")
 	float FireSpeed = 5000;
@@ -41,13 +44,13 @@ private:
 	float WhipTimer = 0.25f;
 	UPROPERTY(EditAnywhere, Category = "Whip")
 	TEnumAsByte<EWhipState> WhipState;
-
 	UPROPERTY(EditAnywhere, Category = "Whip")
 	AWhipTip *WhipTip = nullptr;
 	UPROPERTY(EditAnywhere, Category = "Whip")
 	AWhipCable *WhipCable = nullptr;
 
 	UFUNCTION()
-	void OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	void OnOverlapBegin(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 
+	void ResetStatus();
 };

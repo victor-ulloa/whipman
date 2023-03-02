@@ -5,6 +5,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "WhipTip.h"
 #include "WhipCable.h"
+#include "Whipman/BaseCharacter.h"
+#include "Whipman/Interfaces/Actionable.h"
 
 // Sets default values for this component's properties
 UWhipComponent::UWhipComponent()
@@ -51,7 +53,7 @@ void UWhipComponent::FireWhip(FVector TargetLocation)
 	FTransform ActorTransform = FTransform(StartLocation);
 	WhipTip = GetWorld()->SpawnActorDeferred<AWhipTip>(AWhipTip::StaticClass(), ActorTransform);
 	WhipTip->FireVelocity = VectorDirection * FireSpeed;
-	WhipTip->SphereCollider->OnComponentHit.AddDynamic(this, &UWhipComponent::OnCompHit);
+	WhipTip->SphereCollider->OnComponentBeginOverlap.AddDynamic(this, &UWhipComponent::OnOverlapBegin);
 	WhipTip->SphereCollider->SetCollisionProfileName(TEXT("OverlapAll"));
 	UGameplayStatics::FinishSpawningActor(WhipTip, ActorTransform);
 
@@ -76,12 +78,20 @@ void UWhipComponent::CancelWhip()
 	{
 		WhipTip->Destroy();
 		WhipTip = nullptr;
-		
+
 		WhipCable->Destroy();
 		WhipCable = nullptr;
 
-		WhipState = EWhipState::ReadyToFire;
+		FTimerHandle handle;
+		GetWorld()->GetTimerManager().SetTimer(handle, this, &UWhipComponent::CancelWhip, WhipTimer, false);
+		WhipState = EWhipState::Cooldown;
+		GetWorld()->GetTimerManager().SetTimer(handle, this, &UWhipComponent::ResetStatus, Cooldown, false);
 	}
+}
+
+void UWhipComponent::ResetStatus()
+{
+	WhipState = EWhipState::ReadyToFire;
 }
 
 FVector UWhipComponent::GetStartLocation()
@@ -91,7 +101,16 @@ FVector UWhipComponent::GetStartLocation()
 	return StartingLocation;
 }
 
-void UWhipComponent::OnCompHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, FVector NormalImpulse, const FHitResult &Hit)
+void UWhipComponent::OnOverlapBegin(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
+	if (SweepResult.GetActor()->IsA(ABaseCharacter::StaticClass()))
+	{
+		return;
+	}
+	IActionable *object = Cast<IActionable>(SweepResult.GetActor());
+	if (object)
+	{
+		object->OnOverlap();
+	}
 	CancelWhip();
 }
