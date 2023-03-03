@@ -8,6 +8,7 @@
 #include "BaseLever.generated.h"
 
 class UBoxComponent;
+class ABaseGameState;
 
 UCLASS()
 class WHIPMAN_API ABaseLever : public AActor, public IActionable
@@ -37,4 +38,6 @@ private:
 
 	void SwitchState();
 	void ReloadComponent();
+
+	ABaseGameState *LevelGameState;
 };

@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BaseLever.h"
+#include "Whipman/BaseGameState.h"
 #include "Components/BoxComponent.h"
 
 // Sets default values
@@ -16,6 +17,9 @@ ABaseLever::ABaseLever()
 void ABaseLever::BeginPlay()
 {
 	Super::BeginPlay();
+
+	LevelGameState = GetWorld()->GetGameState<ABaseGameState>();
+	LevelGameState->RegisterLever(this);
 }
 
 void ABaseLever::Tick(float DeltaTime)
@@ -25,7 +29,10 @@ void ABaseLever::Tick(float DeltaTime)
 
 void ABaseLever::OnOverlap()
 {
-	UE_LOG(LogTemp, Display, TEXT("YES"));
+	SwitchState();
+	if(LevelGameState) {
+		LevelGameState->CheckLeverStates();
+	}
 }
 
 void ABaseLever::SwitchState()
