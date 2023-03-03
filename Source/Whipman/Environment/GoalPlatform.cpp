@@ -45,6 +45,13 @@ void AGoalPlatform::OnOverlapBegin(UPrimitiveComponent *Comp, AActor *otherActor
 {
 	if (Cast<APlayerCharacter>(otherActor))
 	{
-		UE_LOG(LogTemp, Display, TEXT("Player on playform"));
+		if (GetWorld()->GetGameState<ABaseGameState>()->AreAllLeversOn)
+		{
+			UE_LOG(LogTemp, Display, TEXT("WINS"));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Display, TEXT("CANT WIN"));
+		}
 	}
 }

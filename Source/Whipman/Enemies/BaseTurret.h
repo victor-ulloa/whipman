@@ -4,12 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Whipman/BasePawn.h"
+#include "Whipman/Interfaces/Actionable.h"
 #include "BaseTurret.generated.h"
 
 class ABaseProjectile;
 
 UCLASS()
-class WHIPMAN_API ABaseTurret : public ABasePawn
+class WHIPMAN_API ABaseTurret : public ABasePawn, public IActionable
 {
 	GENERATED_BODY()
 
@@ -22,13 +23,15 @@ protected:
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
 	UStaticMeshComponent *TurretMesh;
-
 	UPROPERTY(EditAnywhere, Category = "Projectile")
 	TSubclassOf<ABaseProjectile> Projectile;
+	UPROPERTY(EditAnywhere, Category = "Turret", meta = (AllowPrivateAccess = true))
+	float TimeDisabled;
 
 	FTimerHandle FireRateTimerHandle;
 	float FireRate = 2.f;
+	bool isEnabled = true;
 
-	void CheckFireCondition();
 	void Fire();
+	virtual void OnOverlap() override;
 };

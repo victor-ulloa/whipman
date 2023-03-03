@@ -8,7 +8,6 @@ ABaseTurret::ABaseTurret()
 {
     TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TurretMesh"));
     TurretMesh->SetupAttachment(RootComponent);
-    
 }
 
 void ABaseTurret::BeginPlay()
@@ -17,13 +16,22 @@ void ABaseTurret::BeginPlay()
     GetWorldTimerManager().SetTimer(FireRateTimerHandle, this, &ABaseTurret::Fire, FireRate, true);
 }
 
-void ABaseTurret::CheckFireCondition()
-{
-
-}
-
 void ABaseTurret::Fire()
-{  
+{
+    if (!isEnabled)
+    {
+        return;
+    }
     FVector Location = SpawnPoint->GetComponentLocation();
     GetWorld()->SpawnActor<ABaseProjectile>(Projectile, SpawnPoint->GetComponentLocation(), GetActorRotation());
+}
+
+void ABaseTurret::OnOverlap()
+{
+    if (isEnabled)
+    {
+        isEnabled = false;
+        FTimerHandle DisabledTimerHandle;
+        GetWorldTimerManager().SetTimer(DisabledTimerHandle, FTimerDelegate::CreateLambda([this] { isEnabled = true; }), TimeDisabled, false);
+    }
 }
