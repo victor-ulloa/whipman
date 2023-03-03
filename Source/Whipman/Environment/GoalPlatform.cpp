@@ -3,6 +3,7 @@
 #include "GoalPlatform.h"
 #include "Components/BoxComponent.h"
 #include "Whipman/BaseGameState.h"
+#include "Whipman/PlayerCharacter.h"
 
 // Sets default values
 AGoalPlatform::AGoalPlatform()
@@ -23,6 +24,7 @@ void AGoalPlatform::BeginPlay()
 	Super::BeginPlay();
 	ABaseGameState *LevelGameState = GetWorld()->GetGameState<ABaseGameState>();
 	LevelGameState->OnStateUpdatedDelegate.BindUObject(this, &AGoalPlatform::OnStateUpdated);
+	BoxCollider->OnComponentBeginOverlap.AddDynamic(this, &AGoalPlatform::OnOverlapBegin);
 }
 
 // Called every frame
@@ -36,5 +38,13 @@ void AGoalPlatform::OnStateUpdated(bool State)
 	if (State)
 	{
 		UE_LOG(LogTemp, Display, TEXT("ACTIVATE PLATFORM"));
+	}
+}
+
+void AGoalPlatform::OnOverlapBegin(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+{
+	if (Cast<APlayerCharacter>(otherActor))
+	{
+		UE_LOG(LogTemp, Display, TEXT("Player on playform"));
 	}
 }

@@ -33,5 +33,7 @@ private:
 
 	UFUNCTION()
 	void OnStateUpdated(bool State);
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 	
 };
