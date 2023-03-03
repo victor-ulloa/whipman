@@ -6,12 +6,14 @@
 #include "GameFramework/Actor.h"
 #include "GoalPlatform.generated.h"
 
+class UBoxComponent;
+
 UCLASS()
 class WHIPMAN_API AGoalPlatform : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AGoalPlatform();
 
@@ -19,11 +21,13 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UStaticMeshComponent *PlatformMesh;
+	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
+	UBoxComponent *BoxCollider;
 };

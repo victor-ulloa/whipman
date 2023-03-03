@@ -2,6 +2,7 @@
 
 #include "WhipTip.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Components/SphereComponent.h"
 
 // Sets default values
 AWhipTip::AWhipTip()
