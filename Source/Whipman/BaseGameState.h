@@ -7,15 +7,15 @@
 #include "Whipman/Environment/BaseLever.h"
 #include "BaseGameState.generated.h"
 
-/**
- *
- */
+DECLARE_DELEGATE_OneParam(FOnStateUpdated, bool);
 UCLASS()
 class WHIPMAN_API ABaseGameState : public AGameStateBase
 {
 	GENERATED_BODY()
 
 public:
+	FOnStateUpdated OnStateUpdatedDelegate;
+
 	UPROPERTY(EditAnywhere, Category = "GameConfigs")
 	TArray<ABaseLever*> Levers;
 

@@ -30,4 +30,8 @@ private:
 	UStaticMeshComponent *PlatformMesh;
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UBoxComponent *BoxCollider;
+
+	UFUNCTION()
+	void OnStateUpdated(bool State);
+	
 };

@@ -17,4 +17,9 @@ void ABaseGameState::CheckLeverStates()
         AreAllLeversOn &= Lever->LeverOn;
     }
     UE_LOG(LogTemp, Display, TEXT("%d"), Levers.Num());
+    if (OnStateUpdatedDelegate.IsBound())
+    {
+        OnStateUpdatedDelegate.Execute(AreAllLeversOn);
+    }
 }
+
