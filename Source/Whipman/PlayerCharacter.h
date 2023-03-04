@@ -27,6 +27,8 @@ public:
 
 	virtual void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
 
+	void OnPlayerHit();
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -48,6 +50,8 @@ protected:
 	void Interact(const FInputActionValue &Value);
 	void FireWhip(const FInputActionValue &Value);
 
+	void OnDead();
+
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UCameraComponent *Camera;
@@ -56,6 +60,10 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UWhipComponent *Whip;
 
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	int Lives = 3;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	int MaxLives = 4;
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float Speed = 200.f;
 	UPROPERTY(EditAnywhere, Category = "Movement")
@@ -67,7 +75,6 @@ private:
 
 	UFUNCTION()
 	void OnInteractBoxBeginOverlap(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
-
 	UFUNCTION()
 	void OnInteractBoxEndOverlap(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex);
 };

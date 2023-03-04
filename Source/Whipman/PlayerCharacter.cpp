@@ -106,6 +106,18 @@ void APlayerCharacter::FireWhip(const FInputActionValue &Value)
     }
 }
 
+void APlayerCharacter::OnPlayerHit()
+{
+    Lives--;
+    if (Lives <= 0) { OnDead(); }
+}
+
+void APlayerCharacter::OnDead()
+{
+    // TODO: Lost screen displayed
+    UE_LOG(LogTemp, Display, TEXT("Player Dies"));
+}
+
 void APlayerCharacter::OnInteractBoxBeginOverlap(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
     IInteractable *object = Cast<IInteractable>(otherActor);
