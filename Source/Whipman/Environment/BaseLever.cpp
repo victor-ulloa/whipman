@@ -29,10 +29,16 @@ void ABaseLever::Tick(float DeltaTime)
 
 void ABaseLever::OnOverlap()
 {
+	UE_LOG(LogTemp, Display, TEXT("OVERLAP"));
 	SwitchState();
 	if(LevelGameState) {
 		LevelGameState->CheckLeverStates();
 	}
+}
+
+void ABaseLever::OnInteractable()
+{
+	UE_LOG(LogTemp, Display, TEXT("Interactable"));
 }
 
 void ABaseLever::SwitchState()

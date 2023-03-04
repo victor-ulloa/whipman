@@ -10,13 +10,11 @@ class UActionable : public UInterface
 	GENERATED_BODY()
 };
 
-
 class WHIPMAN_API IActionable
 {
 	GENERATED_BODY()
 
 public:
-
-	UFUNCTION() 
+	UFUNCTION()
 	virtual void OnOverlap();
 };

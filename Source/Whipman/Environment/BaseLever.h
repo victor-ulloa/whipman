@@ -5,13 +5,14 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Whipman/Interfaces/Actionable.h"
+#include "Whipman/Interfaces/Interactable.h"
 #include "BaseLever.generated.h"
 
 class UBoxComponent;
 class ABaseGameState;
 
 UCLASS()
-class WHIPMAN_API ABaseLever : public AActor, public IActionable
+class WHIPMAN_API ABaseLever : public AActor, public IActionable, public IInteractable
 {
 	GENERATED_BODY()
 
@@ -35,6 +36,7 @@ private:
 	UStaticMeshComponent *LeverMesh;
 
 	virtual void OnOverlap() override;
+	virtual void OnInteractable() override;
 
 	void SwitchState();
 	void ReloadComponent();

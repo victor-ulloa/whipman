@@ -10,7 +10,7 @@ AWhipTip::AWhipTip()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	SphereCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TipMesh"));
+	SphereCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TipCollider"));
 	RootComponent = SphereCollider;
 	SphereCollider->SetSimulatePhysics(false);
 	SphereCollider->SetNotifyRigidBodyCollision(true);

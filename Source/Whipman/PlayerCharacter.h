@@ -14,6 +14,8 @@ class USpringArmComponent;
 class UCameraComponent;
 class UCharacterMovementComponent;
 class UWhipComponent;
+class UBoxComponent;
+class IInteractable;
 
 UCLASS()
 class WHIPMAN_API APlayerCharacter : public ACharacter
@@ -46,7 +48,8 @@ protected:
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UCameraComponent *Camera;
-
+	UPROPERTY(VisibleAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
+	UBoxComponent *BoxCollider;
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UWhipComponent *Whip;
 
@@ -56,4 +59,12 @@ private:
 	float TurnRate = 200.f;
 	UPROPERTY(EditAnywhere, Category = "Whip")
 	float WhipRange = 20.f;
+
+	IInteractable *InteractableObject;
+
+	UFUNCTION()
+	void OnInteractBoxBeginOverlap(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
+
+	UFUNCTION()
+	void OnInteractBoxEndOverlap(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex);
 };

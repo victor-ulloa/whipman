@@ -9,6 +9,8 @@
 #include "Camera/CameraComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Whip/WhipComponent.h"
+#include "Components/BoxComponent.h"
+#include "Whipman/Interfaces/Interactable.h"
 
 APlayerCharacter::APlayerCharacter()
 {
@@ -18,6 +20,9 @@ APlayerCharacter::APlayerCharacter()
     Camera->bUsePawnControlRotation = true;
 
 	Whip = CreateDefaultSubobject<UWhipComponent>(TEXT("Whip"));
+
+    BoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
+    BoxCollider->SetupAttachment(RootComponent);
 }
 
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
@@ -46,6 +51,9 @@ void APlayerCharacter::BeginPlay()
             Subsystem->AddMappingContext(CharacterMappingContext, 0);
         }
     }
+
+    BoxCollider->OnComponentBeginOverlap.AddDynamic(this, &APlayerCharacter::OnInteractBoxBeginOverlap);
+    BoxCollider->OnComponentEndOverlap.AddDynamic(this, &APlayerCharacter::OnInteractBoxEndOverlap);
 }
 
 void APlayerCharacter::Move(const FInputActionValue &Value)
@@ -87,4 +95,24 @@ void APlayerCharacter::FireWhip(const FInputActionValue &Value)
         }
         Whip->FireWhip(TargetLocation);
     }
+}
+
+void APlayerCharacter::OnInteractBoxBeginOverlap(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+{
+    IInteractable *object = Cast<IInteractable>(otherActor);
+	if (object)
+	{
+        UE_LOG(LogTemp, Display, TEXT("SAVED"));
+		InteractableObject = object;
+	}
+}
+
+void APlayerCharacter::OnInteractBoxEndOverlap(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex)
+{
+    IInteractable *object = Cast<IInteractable>(otherActor);
+	if (object && InteractableObject)
+	{
+        UE_LOG(LogTemp, Display, TEXT("RELEASED"));
+		InteractableObject = nullptr;
+	}
 }
