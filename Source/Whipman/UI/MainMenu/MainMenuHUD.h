@@ -17,17 +17,17 @@ class WHIPMAN_API AMainMenuHUD : public AHUD
 protected:
 	TSharedPtr<SMainMenuWidget> MenuWidget;
 	TSharedPtr<SConfirmationWidget> ConfirmationWidget;
-	TSharedPtr<SWidget> MenuWidgetContainer;
-	TSharedPtr<SWidget> ConfirmationWidgetContainer;
 
 	virtual void BeginPlay() override;
 
-public: 
-
+public:
 	void ShowMenu();
 	void RemoveMenu();
 	void OpenLevel();
 	void ShowQuitConfirmation();
 	void RemoveQuitConfirmation();
 	void ExitGame();
+
+private:
+	UGameViewportClient *ViewportClient;
 };

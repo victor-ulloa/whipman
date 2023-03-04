@@ -11,54 +11,38 @@
 void AMainMenuHUD::BeginPlay()
 {
     Super::BeginPlay();
+    ViewportClient = GetWorld()->GetGameViewport();
     ShowMenu();
 }
 
 void AMainMenuHUD::ShowMenu()
 {
-    if (GEngine && GEngine->GameViewport)
-    {
-        MenuWidget = SNew(SMainMenuWidget).MenuHUD(this);
-        GEngine->GameViewport->AddViewportWidgetContent(SAssignNew(MenuWidgetContainer, SWeakWidget).PossiblyNullContent(MenuWidget.ToSharedRef()), 0);
-        if (PlayerOwner)
-        {
-            PlayerOwner->bShowMouseCursor = true;
-            PlayerOwner->SetInputMode(FInputModeUIOnly());
-        }
-    }
+    MenuWidget = SNew(SMainMenuWidget).MenuHUD(this);
+    ViewportClient->AddViewportWidgetContent(MenuWidget.ToSharedRef());
 }
 
 void AMainMenuHUD::RemoveMenu()
 {
-    if (GEngine && GEngine->GameViewport && MenuWidgetContainer.IsValid())
-    {
-        GEngine->GameViewport->RemoveViewportWidgetContent(MenuWidgetContainer.ToSharedRef());
-    }
-    
+    ViewportClient->RemoveViewportWidgetContent(MenuWidget.ToSharedRef());
 }
 
 void AMainMenuHUD::OpenLevel()
 {
     PlayerOwner->bShowMouseCursor = false;
     PlayerOwner->SetInputMode(FInputModeGameOnly());
+    RemoveMenu();
     UGameplayStatics::OpenLevel(this, "Level");
 }
 
 void AMainMenuHUD::ShowQuitConfirmation()
 {
-    if (GEngine && GEngine->GameViewport)
-    {
-        ConfirmationWidget = SNew(SConfirmationWidget).MenuHUD(this);
-        GEngine->GameViewport->AddViewportWidgetContent(SAssignNew(ConfirmationWidgetContainer, SWeakWidget).PossiblyNullContent(ConfirmationWidget.ToSharedRef()), 1);
-    }
+    ConfirmationWidget = SNew(SConfirmationWidget).MenuHUD(this);
+    ViewportClient->AddViewportWidgetContent(ConfirmationWidget.ToSharedRef(), 1);
 }
 
 void AMainMenuHUD::RemoveQuitConfirmation()
 {
-    if (GEngine && GEngine->GameViewport && ConfirmationWidgetContainer.IsValid())
-    {
-        GEngine->GameViewport->RemoveViewportWidgetContent(ConfirmationWidgetContainer.ToSharedRef());
-    }
+    ViewportClient->RemoveViewportWidgetContent(ConfirmationWidget.ToSharedRef());
 }
 
 void AMainMenuHUD::ExitGame()
