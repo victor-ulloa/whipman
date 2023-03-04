@@ -23,12 +23,14 @@ protected:
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
 	UStaticMeshComponent *TurretMesh;
+
 	UPROPERTY(EditAnywhere, Category = "Projectile")
 	TSubclassOf<ABaseProjectile> Projectile;
 	UPROPERTY(EditAnywhere, Category = "Turret", meta = (AllowPrivateAccess = true))
 	float TimeDisabled;
-
 	FTimerHandle FireRateTimerHandle;
+	UPROPERTY(EditAnywhere, Category = "Turret", meta = (AllowPrivateAccess = true))
+	
 	float FireRate = 2.f;
 	bool isEnabled = true;
 
