@@ -19,7 +19,7 @@ APlayerCharacter::APlayerCharacter()
     Camera->SetRelativeLocation(FVector(-10.f, 0.f, 60.f));
     Camera->bUsePawnControlRotation = true;
 
-	Whip = CreateDefaultSubobject<UWhipComponent>(TEXT("Whip"));
+    Whip = CreateDefaultSubobject<UWhipComponent>(TEXT("Whip"));
 
     BoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
     BoxCollider->SetupAttachment(RootComponent);
@@ -36,7 +36,8 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputCom
 
         EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Move);
         EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Look);
-		EnhancedInputComponent->BindAction(WhipAction, ETriggerEvent::Triggered, this, &APlayerCharacter::FireWhip);
+        EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Interact);
+        EnhancedInputComponent->BindAction(WhipAction, ETriggerEvent::Triggered, this, &APlayerCharacter::FireWhip);
     }
 }
 
@@ -77,9 +78,17 @@ void APlayerCharacter::Look(const FInputActionValue &Value)
     }
 }
 
+void APlayerCharacter::Interact(const FInputActionValue &Value)
+{
+    if (InteractableObject)
+    {
+        InteractableObject->OnInteractable();
+    }
+}
+
 void APlayerCharacter::FireWhip(const FInputActionValue &Value)
 {
-	if (!Whip->IsInUse())
+    if (!Whip->IsInUse())
     {
         FHitResult HitResult;
         FVector StartLocation = Camera->GetComponentLocation();
@@ -100,19 +109,17 @@ void APlayerCharacter::FireWhip(const FInputActionValue &Value)
 void APlayerCharacter::OnInteractBoxBeginOverlap(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
     IInteractable *object = Cast<IInteractable>(otherActor);
-	if (object)
-	{
-        UE_LOG(LogTemp, Display, TEXT("SAVED"));
-		InteractableObject = object;
-	}
+    if (object)
+    {
+        InteractableObject = object;
+    }
 }
 
 void APlayerCharacter::OnInteractBoxEndOverlap(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex)
 {
     IInteractable *object = Cast<IInteractable>(otherActor);
-	if (object && InteractableObject)
-	{
-        UE_LOG(LogTemp, Display, TEXT("RELEASED"));
-		InteractableObject = nullptr;
-	}
+    if (object && InteractableObject)
+    {
+        InteractableObject = nullptr;
+    }
 }

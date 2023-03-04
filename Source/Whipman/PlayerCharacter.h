@@ -36,13 +36,16 @@ protected:
 	UInputAction *MoveAction;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
 	UInputAction *LookAction;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
 	UInputAction *JumpAction;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
+	UInputAction *InteractAction;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Input)
 	UInputAction *WhipAction;
 
 	void Move(const FInputActionValue &Value);
 	void Look(const FInputActionValue &Value);
+	void Interact(const FInputActionValue &Value);
 	void FireWhip(const FInputActionValue &Value);
 
 private:
