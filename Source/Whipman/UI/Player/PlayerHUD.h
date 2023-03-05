@@ -4,29 +4,23 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
-#include "MainMenuHUD.generated.h"
+#include "PlayerHUD.generated.h"
 
-class SConfirmationWidget;
-class SMainMenuWidget;
+class SPlayerHUDWidget;
 
 UCLASS()
-class WHIPMAN_API AMainMenuHUD : public AHUD
+class WHIPMAN_API APlayerHUD : public AHUD
 {
 	GENERATED_BODY()
 
 protected:
 	virtual void BeginPlay() override;
 
-	TSharedPtr<SMainMenuWidget> MenuWidget;
-	TSharedPtr<SConfirmationWidget> ConfirmationWidget;
+	TSharedPtr<SPlayerHUDWidget> PlayerHUDWidget;
 
 public:
 	void ShowMenu();
 	void RemoveMenu();
-	void OpenLevel();
-	void ShowQuitConfirmation();
-	void RemoveQuitConfirmation();
-	void ExitGame();
 
 private:
 	UGameViewportClient *ViewportClient;
