@@ -59,11 +59,7 @@ void APlayerCharacter::BeginPlay()
     BoxCollider->OnComponentEndOverlap.AddDynamic(this, &APlayerCharacter::OnInteractBoxEndOverlap);
 
     APlayerHUD *PlayerHUD = Cast<APlayerHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
-
-    // for (int i = 0; i < Lives; i++)
-    // {
-        PlayerHUD->OnLivesChanged(Lives);
-    // }
+    PlayerHUD->OnLivesChanged(Lives);
     
 }
 
@@ -130,6 +126,7 @@ void APlayerCharacter::OnDead()
 {
     // TODO: Lost screen displayed
     UE_LOG(LogTemp, Display, TEXT("Player Dies"));
+    UGameplayStatics::OpenLevel(this, "GameOverLevel");
 }
 
 void APlayerCharacter::OnInteractBoxBeginOverlap(UPrimitiveComponent *Comp, AActor *otherActor, UPrimitiveComponent *otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
