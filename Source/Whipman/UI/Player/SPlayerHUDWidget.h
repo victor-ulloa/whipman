@@ -9,7 +9,7 @@ class APlayerHUD;
 
 class WHIPMAN_API SPlayerHUDWidget : public SCompoundWidget
 {
-	public:
+public:
 	SLATE_BEGIN_ARGS(SPlayerHUDWidget) {}
 
 	SLATE_ARGUMENT(TWeakObjectPtr<APlayerHUD>, PlayerHUD)
@@ -17,6 +17,10 @@ class WHIPMAN_API SPlayerHUDWidget : public SCompoundWidget
 	SLATE_END_ARGS()
 
 	TWeakObjectPtr<APlayerHUD> PlayerHUD;
+
+	TSharedRef<SHorizontalBox, ESPMode::ThreadSafe> HeartContainer = SNew(SHorizontalBox);
+
+	void OnLivesChanged(int Lives);
 
 	void Construct(const FArguments &InArgs);
 };

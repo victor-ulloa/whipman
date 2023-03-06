@@ -20,3 +20,8 @@ void APlayerHUD::RemoveMenu()
 {
     ViewportClient->RemoveViewportWidgetContent(PlayerHUDWidget.ToSharedRef());
 }
+
+void APlayerHUD::OnLivesChanged(int Lives)
+{
+    PlayerHUDWidget.ToSharedRef()->OnLivesChanged(Lives);
+}

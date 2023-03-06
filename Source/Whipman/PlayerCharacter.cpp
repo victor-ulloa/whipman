@@ -11,6 +11,8 @@
 #include "Whip/WhipComponent.h"
 #include "Components/BoxComponent.h"
 #include "Whipman/Interfaces/Interactable.h"
+#include "Whipman/UI/Player/PlayerHUD.h"
+#include "GameFramework/HUD.h"
 
 APlayerCharacter::APlayerCharacter()
 {
@@ -55,6 +57,14 @@ void APlayerCharacter::BeginPlay()
 
     BoxCollider->OnComponentBeginOverlap.AddDynamic(this, &APlayerCharacter::OnInteractBoxBeginOverlap);
     BoxCollider->OnComponentEndOverlap.AddDynamic(this, &APlayerCharacter::OnInteractBoxEndOverlap);
+
+    APlayerHUD *PlayerHUD = Cast<APlayerHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+
+    // for (int i = 0; i < Lives; i++)
+    // {
+        PlayerHUD->OnLivesChanged(Lives);
+    // }
+    
 }
 
 void APlayerCharacter::Move(const FInputActionValue &Value)
@@ -109,6 +119,10 @@ void APlayerCharacter::FireWhip(const FInputActionValue &Value)
 void APlayerCharacter::OnPlayerHit()
 {
     Lives--;
+
+    APlayerHUD *PlayerHUD = Cast<APlayerHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+    PlayerHUD->OnLivesChanged(Lives);
+
     if (Lives <= 0) { OnDead(); }
 }
 

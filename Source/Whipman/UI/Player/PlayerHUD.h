@@ -8,6 +8,7 @@
 
 class SPlayerHUDWidget;
 
+
 UCLASS()
 class WHIPMAN_API APlayerHUD : public AHUD
 {
@@ -16,11 +17,12 @@ class WHIPMAN_API APlayerHUD : public AHUD
 protected:
 	virtual void BeginPlay() override;
 
+public:
 	TSharedPtr<SPlayerHUDWidget> PlayerHUDWidget;
 
-public:
 	void ShowMenu();
 	void RemoveMenu();
+	void OnLivesChanged(int Lives);
 
 private:
 	UGameViewportClient *ViewportClient;
