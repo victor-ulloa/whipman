@@ -124,7 +124,6 @@ void APlayerCharacter::OnPlayerHit()
 
 void APlayerCharacter::OnDead()
 {
-    // TODO: Lost screen displayed
     UE_LOG(LogTemp, Display, TEXT("Player Dies"));
     UGameplayStatics::OpenLevel(this, "GameOverLevel");
 }
