@@ -9,6 +9,9 @@ void SPlayerHUDWidget::Construct(const FArguments &InArgs)
 {
     bCanSupportFocus = true;
 
+    const FMargin LivesContainerPadding = FMargin(30.f);
+    const FMargin LivesPadding = FMargin(30.f);
+
     FString CrosshairPath = FPaths::ProjectContentDir() / TEXT("Assets/Vectors/crosshair.svg");
     // thin circle as crosshair
 
@@ -22,7 +25,7 @@ void SPlayerHUDWidget::Construct(const FArguments &InArgs)
         .VAlign(VAlign_Center)
         [
             SNew(SImage)
-            .Image(new FSlateVectorImageBrush(CrosshairPath, FVector2D(128, 128), FLinearColor::Black))
+            .Image(new FSlateVectorImageBrush(CrosshairPath, FVector2D(64, 64), FLinearColor::Black))
         ]
 
         // Heart
@@ -30,6 +33,7 @@ void SPlayerHUDWidget::Construct(const FArguments &InArgs)
         + SOverlay::Slot()
         .HAlign(HAlign_Left)
         .VAlign(VAlign_Top)
+        .Padding(LivesContainerPadding)
         [
             HeartContainer
         ]
@@ -46,7 +50,7 @@ void SPlayerHUDWidget::OnLivesChanged(int Lives)
         if (Lives < HeartContainer->NumSlots()) {
             HeartContainer->RemoveSlot(HeartContainer->GetSlot(HeartContainer->NumSlots() - 1).GetWidget());
         } else {
-            TSharedRef<SImage, ESPMode::ThreadSafe> HeartImage = SNew(SImage).Image(new FSlateVectorImageBrush(HeartsPath, FVector2D(128, 128)));
+            TSharedRef<SImage, ESPMode::ThreadSafe> HeartImage = SNew(SImage).Image(new FSlateVectorImageBrush(HeartsPath, FVector2D(64, 64)));
             HeartContainer->AddSlot();
             HeartContainer->GetSlot(HeartContainer->NumSlots() - 1).AttachWidget(HeartImage);
         }
