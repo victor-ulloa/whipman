@@ -4,6 +4,7 @@
 #include "Components/BoxComponent.h"
 #include "Whipman/BaseGameState.h"
 #include "Whipman/PlayerCharacter.h"
+#include "MoverComponent.h"
 
 // Sets default values
 AGoalPlatform::AGoalPlatform()
@@ -16,6 +17,9 @@ AGoalPlatform::AGoalPlatform()
 
 	BoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
 	BoxCollider->SetupAttachment(RootComponent);
+
+	MoverComponent = CreateDefaultSubobject<UMoverComponent>(TEXT("MoverComponent"));
+
 }
 
 // Called when the game starts or when spawned
@@ -35,8 +39,15 @@ void AGoalPlatform::Tick(float DeltaTime)
 
 void AGoalPlatform::OnStateUpdated(bool State)
 {
+	if (MoverComponent)
+	{
+		UE_LOG(LogTemp, Display, TEXT("THERE"));
+		MoverComponent->SetShouldMove(State);
+	}
+
 	if (State)
 	{
+
 		UE_LOG(LogTemp, Display, TEXT("ACTIVATE PLATFORM"));
 	}
 }

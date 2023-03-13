@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "MoverComponent.h"
 #include "GoalPlatform.generated.h"
 
 class UBoxComponent;
@@ -30,6 +31,8 @@ private:
 	UStaticMeshComponent *PlatformMesh;
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UBoxComponent *BoxCollider;
+	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
+	UMoverComponent *MoverComponent;
 
 	UFUNCTION()
 	void OnStateUpdated(bool State);
