@@ -60,7 +60,8 @@ void APlayerCharacter::BeginPlay()
 
     APlayerHUD *PlayerHUD = Cast<APlayerHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
     PlayerHUD->OnLivesChanged(Lives);
-    
+
+    CheckpointTransform = GetActorTransform();
 }
 
 void APlayerCharacter::Move(const FInputActionValue &Value)
@@ -115,11 +116,14 @@ void APlayerCharacter::FireWhip(const FInputActionValue &Value)
 void APlayerCharacter::OnPlayerHit()
 {
     Lives--;
-
     APlayerHUD *PlayerHUD = Cast<APlayerHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
     PlayerHUD->OnLivesChanged(Lives);
 
-    if (Lives <= 0) { OnDead(); }
+    if (Lives <= 0)
+    {
+        OnDead();
+    }
+    SetActorTransform(CheckpointTransform);
 }
 
 void APlayerCharacter::OnDead()

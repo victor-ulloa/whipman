@@ -60,9 +60,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Components", meta = (AllowPrivateAccess = true))
 	UWhipComponent *Whip;
 
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditAnywhere, Category = "Stats")
 	int Lives = 3;
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditAnywhere, Category = "Stats")
 	int MaxLives = 4;
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float Speed = 200.f;
@@ -70,6 +70,8 @@ private:
 	float TurnRate = 200.f;
 	UPROPERTY(EditAnywhere, Category = "Whip")
 	float WhipRange = 20.f;
+	UPROPERTY(EditAnywhere, Category = "Checkpoint")
+	FTransform CheckpointTransform;
 
 	IInteractable *InteractableObject;
 

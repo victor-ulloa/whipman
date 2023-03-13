@@ -10,6 +10,7 @@ void SPlayerHUDWidget::Construct(const FArguments &InArgs)
     bCanSupportFocus = true;
 
     FString CrosshairPath = FPaths::ProjectContentDir() / TEXT("Assets/Vectors/crosshair.svg");
+    // thin circle as crosshair
 
     ChildSlot 
     [

@@ -17,12 +17,11 @@ public:
 	FOnStateUpdated OnStateUpdatedDelegate;
 
 	UPROPERTY(EditAnywhere, Category = "GameConfigs")
-	TArray<ABaseLever*> Levers;
+	TArray<ABaseLever *> Levers;
 
 	void RegisterLever(ABaseLever *NewLever);
 	void CheckLeverStates();
 
 	UPROPERTY(EditAnywhere, Category = "State")
 	bool AreAllLeversOn = false;
-	
 };
