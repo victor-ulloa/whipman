@@ -17,4 +17,14 @@ protected:
 	virtual void BeginPlay() override;
 
 	TSharedPtr<SGameOverWidget> GameOverWidget;
+
+public:
+	void ShowUI();
+	void RemoveUI();
+	void OpenLevel();
+	void OpenMainMenu();
+
+private:
+	UGameViewportClient *ViewportClient;
+
 };

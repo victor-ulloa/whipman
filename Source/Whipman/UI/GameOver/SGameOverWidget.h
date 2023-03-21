@@ -18,6 +18,8 @@ public:
 
 	void Construct(const FArguments &InArgs);
 
+	FReply OnRestartClicked() const;
+	FReply OnMainMenuClicked() const;
 
 	TWeakObjectPtr<AGameOverHUD> GameOverHUD;
 };

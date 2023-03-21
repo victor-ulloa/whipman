@@ -11,14 +11,14 @@ void SMainMenuWidget::Construct(const FArguments &InArgs)
 
     MenuHUD = InArgs._MenuHUD;
 
-    const FMargin ContentPadding = FMargin(500.f, 300.f);
-    const FMargin ButtonPadding = FMargin(10.f);
-
-    const FText TitleText = LOCTEXT("GameTitle", "SkyPirates");
+    const FText TitleText = LOCTEXT("GameTitle", "Whipman");
     const FText PlayText = LOCTEXT("PlayGame", "Play");
     const FText SettingsText = LOCTEXT("Settings", "Settings");
     const FText CreditsText = LOCTEXT("Credits", "Credits");
     const FText QuitText = LOCTEXT("QuitGame", "Quit Game");
+
+    const FMargin ContentPadding = FMargin(500.f, 300.f);
+    const FMargin ButtonPadding = FMargin(10.f);
 
     FSlateFontInfo ButtonTextStyle = FCoreStyle::Get().GetFontStyle("EmbossedText");
     ButtonTextStyle.Size = 40.f;
@@ -112,7 +112,6 @@ void SMainMenuWidget::Construct(const FArguments &InArgs)
 
 FReply SMainMenuWidget::OnPlayClicked() const
 {
-    UE_LOG(LogTemp, Log, TEXT("Play Clicked"));
     MenuHUD->OpenLevel();
     return FReply::Handled();
 }
@@ -133,7 +132,6 @@ FReply SMainMenuWidget::OnCreditsClicked() const
 
 FReply SMainMenuWidget::OnQuitClicked() const
 {
-    UE_LOG(LogTemp, Log, TEXT("Quit Clicked"));
     MenuHUD->ShowQuitConfirmation();
     return FReply::Handled();
 }

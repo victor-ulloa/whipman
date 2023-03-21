@@ -19,7 +19,6 @@ AGoalPlatform::AGoalPlatform()
 	BoxCollider->SetupAttachment(RootComponent);
 
 	MoverComponent = CreateDefaultSubobject<UMoverComponent>(TEXT("MoverComponent"));
-
 }
 
 // Called when the game starts or when spawned
@@ -41,14 +40,7 @@ void AGoalPlatform::OnStateUpdated(bool State)
 {
 	if (MoverComponent)
 	{
-		UE_LOG(LogTemp, Display, TEXT("THERE"));
 		MoverComponent->SetShouldMove(State);
-	}
-
-	if (State)
-	{
-
-		UE_LOG(LogTemp, Display, TEXT("ACTIVATE PLATFORM"));
 	}
 }
 
@@ -59,10 +51,6 @@ void AGoalPlatform::OnOverlapBegin(UPrimitiveComponent *Comp, AActor *otherActor
 		if (GetWorld()->GetGameState<ABaseGameState>()->AreAllLeversOn)
 		{
 			UE_LOG(LogTemp, Display, TEXT("WINS"));
-		}
-		else
-		{
-			UE_LOG(LogTemp, Display, TEXT("CANT WIN"));
 		}
 	}
 }
