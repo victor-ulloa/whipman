@@ -5,11 +5,10 @@
 #include "Whipman/BaseGameState.h"
 #include "Whipman/PlayerCharacter.h"
 #include "MoverComponent.h"
+#include "Kismet/GameplayStatics.h"
 
-// Sets default values
 AGoalPlatform::AGoalPlatform()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	PlatformMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PlatformMesh"));
@@ -21,7 +20,6 @@ AGoalPlatform::AGoalPlatform()
 	MoverComponent = CreateDefaultSubobject<UMoverComponent>(TEXT("MoverComponent"));
 }
 
-// Called when the game starts or when spawned
 void AGoalPlatform::BeginPlay()
 {
 	Super::BeginPlay();
@@ -30,7 +28,6 @@ void AGoalPlatform::BeginPlay()
 	BoxCollider->OnComponentBeginOverlap.AddDynamic(this, &AGoalPlatform::OnOverlapBegin);
 }
 
-// Called every frame
 void AGoalPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -50,7 +47,7 @@ void AGoalPlatform::OnOverlapBegin(UPrimitiveComponent *Comp, AActor *otherActor
 	{
 		if (GetWorld()->GetGameState<ABaseGameState>()->AreAllLeversOn)
 		{
-			UE_LOG(LogTemp, Display, TEXT("WINS"));
+			UGameplayStatics::OpenLevel(this, "WinLevel");
 		}
 	}
 }

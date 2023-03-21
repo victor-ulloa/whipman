@@ -128,7 +128,6 @@ void APlayerCharacter::OnPlayerHit()
 
 void APlayerCharacter::OnDead()
 {
-    UE_LOG(LogTemp, Display, TEXT("Player Dies"));
     UGameplayStatics::OpenLevel(this, "GameOverLevel");
 }
 

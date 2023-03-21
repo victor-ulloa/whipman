@@ -22,7 +22,7 @@ void SConfirmationWidget::Construct(const FArguments &InArgs)
     DialogTextStyle.Size = 60.f;
 
     FSlateFontInfo ButtonTextStyle = FCoreStyle::Get().GetFontStyle("EmbossedText");
-    ButtonTextStyle.Size = 40.f;
+    ButtonTextStyle.Size = 30.f;
 
     ChildSlot [
         SNew(SOverlay)
@@ -34,9 +34,8 @@ void SConfirmationWidget::Construct(const FArguments &InArgs)
             .ColorAndOpacity(FColor::Red)
         ]
         + SOverlay::Slot()
-        .HAlign(HAlign_Fill)
-        .VAlign(VAlign_Fill)
-        .Padding(ContentPadding)
+        .HAlign(HAlign_Center)
+        .VAlign(VAlign_Center)
         [
             SNew(SVerticalBox)
 
