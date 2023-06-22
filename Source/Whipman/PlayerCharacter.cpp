@@ -116,13 +116,13 @@ void APlayerCharacter::FireWhip(const FInputActionValue &Value)
 void APlayerCharacter::OnPlayerHit()
 {
     Lives--;
-    APlayerHUD *PlayerHUD = Cast<APlayerHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
-    PlayerHUD->OnLivesChanged(Lives);
-
     if (Lives <= 0)
     {
         OnDead();
+        return;
     }
+    APlayerHUD *PlayerHUD = Cast<APlayerHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+    PlayerHUD->OnLivesChanged(Lives);
     SetActorTransform(CheckpointTransform);
 }
 
