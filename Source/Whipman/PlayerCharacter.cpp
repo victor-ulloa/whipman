@@ -58,9 +58,6 @@ void APlayerCharacter::BeginPlay()
     BoxCollider->OnComponentBeginOverlap.AddDynamic(this, &APlayerCharacter::OnInteractBoxBeginOverlap);
     BoxCollider->OnComponentEndOverlap.AddDynamic(this, &APlayerCharacter::OnInteractBoxEndOverlap);
 
-    APlayerHUD *PlayerHUD = Cast<APlayerHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
-    PlayerHUD->OnLivesChanged(Lives);
-
     CheckpointTransform = GetActorTransform();
 }
 
@@ -123,7 +120,13 @@ void APlayerCharacter::OnPlayerHit()
     }
     APlayerHUD *PlayerHUD = Cast<APlayerHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
     PlayerHUD->OnLivesChanged(Lives);
+    OnHealthChangedDelegate.ExecuteIfBound(Lives);
     SetActorTransform(CheckpointTransform);
+}
+
+int APlayerCharacter::GetMaxLives()
+{
+    return MaxLives;
 }
 
 void APlayerCharacter::OnDead()

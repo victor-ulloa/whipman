@@ -17,6 +17,8 @@ class UWhipComponent;
 class UBoxComponent;
 class IInteractable;
 
+DECLARE_DELEGATE_OneParam(FOnHealthChanged, float);
+
 UCLASS()
 class WHIPMAN_API APlayerCharacter : public ACharacter
 {
@@ -25,9 +27,12 @@ class WHIPMAN_API APlayerCharacter : public ACharacter
 public:
 	APlayerCharacter();
 
+	FOnHealthChanged OnHealthChangedDelegate;
+
 	virtual void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
 
 	void OnPlayerHit();
+	int GetMaxLives();
 
 protected:
 	virtual void BeginPlay() override;
