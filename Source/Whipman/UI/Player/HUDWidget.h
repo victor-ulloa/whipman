@@ -30,11 +30,14 @@ public:
 	// Crosshair
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	UImage *Crosshair;
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UImage *Heart_1;
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UImage *Heart_2;
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UImage *Heart_3;
 	
 private:
-	
 	UFUNCTION()
 	void OnHealthChanged(float HealthValue);
-
-	int MaxLives;
 };

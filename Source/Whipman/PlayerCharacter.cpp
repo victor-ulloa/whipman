@@ -118,8 +118,6 @@ void APlayerCharacter::OnPlayerHit()
         OnDead();
         return;
     }
-    APlayerHUD *PlayerHUD = Cast<APlayerHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
-    PlayerHUD->OnLivesChanged(Lives);
     OnHealthChangedDelegate.ExecuteIfBound(Lives);
     SetActorTransform(CheckpointTransform);
 }
