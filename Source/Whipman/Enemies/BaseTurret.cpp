@@ -22,7 +22,6 @@ void ABaseTurret::Fire()
     {
         return;
     }
-    FVector Location = SpawnPoint->GetComponentLocation();
     GetWorld()->SpawnActor<ABaseProjectile>(Projectile, SpawnPoint->GetComponentLocation(), GetActorRotation());
 }
 
