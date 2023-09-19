@@ -11,7 +11,7 @@ void SMainMenuWidget::Construct(const FArguments &InArgs)
 
     MenuHUD = InArgs._MenuHUD;
 
-    const FText TitleText = LOCTEXT("GameTitle", "Whipman");
+    const FText TitleText = LOCTEXT("GameTitle", "WhipQuest");
     const FText PlayText = LOCTEXT("PlayGame", "Play");
     const FText SettingsText = LOCTEXT("Settings", "Settings");
     const FText CreditsText = LOCTEXT("Credits", "Credits");

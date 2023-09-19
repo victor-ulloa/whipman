@@ -19,6 +19,7 @@ void AMainMenuHUD::ShowMenu()
 {
     MenuWidget = SNew(SMainMenuWidget).MenuHUD(this);
     ViewportClient->AddViewportWidgetContent(MenuWidget.ToSharedRef());
+    UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = true;
 }
 
 void AMainMenuHUD::RemoveMenu()
@@ -31,6 +32,7 @@ void AMainMenuHUD::OpenLevel()
     PlayerOwner->bShowMouseCursor = false;
     PlayerOwner->SetInputMode(FInputModeGameOnly());
     RemoveMenu();
+    UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = false;
     UGameplayStatics::OpenLevel(this, "Level");
 }
 
